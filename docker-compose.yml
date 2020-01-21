@@ -1,0 +1,68 @@
+version: '3'
+services:
+  php:
+    build:
+      context: docker/php-cli
+    volumes:
+      - ./:/var/www
+      - composer:/root/.composer/cache
+    environment:
+      XDEBUG_CONFIG: "remote_host=192.168.223.1 remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=Docker"
+      REDIS_PORT: "6379"
+      REDIS_HOST: "redis"
+    networks:
+      - internal
+    depends_on:
+      - postgres
+      - mailer
+    links:
+      - redis
+    tty: true
+  postgres:
+    image: postgres:12.1-alpine
+    volumes:
+      - toplyvo-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: toplyvo
+      POSTGRES_PASSWORD: toplyvo
+      POSTGRES_DB: toplyvo
+    networks:
+      - internal
+    ports:
+      - "54321:5432"
+  nginx:
+    build:
+      context: docker/nginx
+    volumes:
+      - ./:/var/www
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+    networks:
+      - internal
+  mailer:
+    image: mailhog/mailhog
+    networks:
+      - internal
+    ports:
+      - "1025:1025"
+      - "8082:8025"
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - internal
+volumes:
+  toplyvo-postgres:
+  composer:
+
+networks:
+  internal:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.223.0/28
