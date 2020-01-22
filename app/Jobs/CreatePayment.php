@@ -29,7 +29,7 @@ class CreatePayment implements ShouldQueue
         $this->card = $card;
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->payment->payment($this->order, $this->card);
         $this->order->changeStatus(Order::STATUS_PAID);
