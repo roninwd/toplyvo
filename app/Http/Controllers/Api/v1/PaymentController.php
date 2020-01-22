@@ -4,20 +4,20 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Entities\Order\Order;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PaymentRequest;
 use App\Jobs\CreatePayment;
 use App\Services\Payment\Card;
 use App\Services\Payment\Provider\LiqPayService;
-use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function handle(Request $request, Order $order)
+    public function handle(PaymentRequest $request, Order $order)
     {
         $card = new Card(
             $request->get('number', '4242424242424242'),
             $request->get('month', '03'),
             $request->get('year', '22'),
-            $request->get('cvv', '111'),
+            $request->get('cvv', '111')
         );
 
         CreatePayment::dispatch(
