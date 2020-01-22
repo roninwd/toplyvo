@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\Order;
+use App\Entities\Order\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +21,8 @@ class CreateOrdersTable extends Migration
             $table->string('city')->nullable();
             $table->string('street')->nullable();
 
+            $table->string('currency')->nullable();
+            $table->string('comment')->nullable();
 
             $table->timestamps();
 

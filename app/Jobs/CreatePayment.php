@@ -2,11 +2,12 @@
 
 namespace App\Jobs;
 
-use App\Entities\Order;
+use App\Entities\Order\Order;
+use App\Services\Payment\Card;
+use App\Services\Payment\PaymentInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Http\Request;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
@@ -18,15 +19,19 @@ class CreatePayment implements ShouldQueue
     use SerializesModels;
 
     private Order $order;
+    private PaymentInterface $payment;
+    private Card $card;
 
-    public function __construct(Order $order, Request $request)
+    public function __construct(Order $order, PaymentInterface $payment, Card $card)
     {
         $this->order = $order;
+        $this->payment = $payment;
+        $this->card = $card;
     }
 
     public function handle()
     {
-        //todo payment
+        $this->payment->payment($this->order, $this->card);
         $this->order->changeStatus(Order::STATUS_PAID);
     }
 }

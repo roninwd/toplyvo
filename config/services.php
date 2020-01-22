@@ -29,4 +29,9 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'payment' => [
+        'public' => env('PAYMENT_PUBLIC'),
+        'private' => env('PAYMENT_PRIVATE'),
+        'card' => env('RECEIVER_CARD')
+    ]
 ];

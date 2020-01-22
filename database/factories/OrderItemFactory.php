@@ -1,7 +1,6 @@
 <?php
 
-
-use App\Entities\OrderItem;
+use App\Entities\Order\OrderItem;
 use App\Entities\Product;
 use Illuminate\Database\Eloquent\Factory;
 

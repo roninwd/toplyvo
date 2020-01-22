@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Entities\Order;
+use App\Entities\Order\Order;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class OrderRepository

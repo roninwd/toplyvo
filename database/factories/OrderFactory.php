@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Entities\Order;
+use App\Entities\Order\Order;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 

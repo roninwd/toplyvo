@@ -13,6 +13,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
+        "liqpay/liqpay": "^1.2",
         "predis/predis": "^1.1",
         "webmozart/assert": "^1.6"
     },

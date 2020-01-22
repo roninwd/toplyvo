@@ -1,7 +1,7 @@
 <?php
 
-use App\Entities\Order;
-use App\Entities\OrderItem;
+use App\Entities\Order\Order;
+use App\Entities\Order\OrderItem;
 use Illuminate\Database\Seeder;
 
 class OrderSeeder extends Seeder

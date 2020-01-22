@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Entities\Order;
+use App\Entities\Order\Order;
 use App\Http\Resources\Admin\AllOrdersResource;
 use App\Http\Resources\Admin\OrderResource;
 use App\Repositories\OrderRepository;

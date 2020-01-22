@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Entities;
+namespace App\Entities\Order;
 
+use App\Services\Payment\Payable;
+use App\Services\Payment\ICanSum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -42,7 +44,7 @@ use Webmozart\Assert\Assert;
  * @method static Builder|Order whereUserId($value)
  * @mixin Eloquent
  */
-class Order extends Model
+class Order extends Model implements Payable
 {
     protected $fillable = ['name', 'email', 'surname', 'country', 'city', 'street'];
 
@@ -79,5 +81,22 @@ class Order extends Model
     public function isPaid(): bool
     {
         return $this->status === self::STATUS_PAID;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getAmount(): int
+    {
+        return $this->items->reduce(static function (int $result, ICanSum $item) {
+            return $result + $item->getAmount();
+        }, 0);
+    }
+
+    public function getCurrency(): string
+    {
+        return $this->currency ?? 'UAH';
     }
 }

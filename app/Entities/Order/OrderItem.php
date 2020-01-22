@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Entities;
+namespace App\Entities\Order;
 
+use App\Services\Payment\ICanSum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $product_id
  * @property int $count
  * @property int $price
- * @property-read \App\Entities\Order $order
+ * @property-read Order $order
  * @method static Builder|OrderItem newModelQuery()
  * @method static Builder|OrderItem newQuery()
  * @method static Builder|OrderItem query()
@@ -26,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|OrderItem whereProductId($value)
  * @mixin Eloquent
  */
-class OrderItem extends Model
+class OrderItem extends Model implements ICanSum
 {
     public $timestamps = false;
 
@@ -35,5 +36,10 @@ class OrderItem extends Model
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function getAmount(): int
+    {
+        return $this->price * $this->count;
     }
 }

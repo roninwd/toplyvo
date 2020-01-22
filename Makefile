@@ -8,6 +8,8 @@ down:
 	docker-compose down -v --remove-orphans
 up:
 	docker-compose up -d
+	docker-compose exec php php artisan queue:work
+
 bash:
 	docker-compose exec php /bin/bash
 queue:
@@ -22,4 +24,4 @@ ide:
 	docker-compose exec php php artisan ide-helper:model
 migrate:
 	docker-compose exec php php artisan migrate
-init: build queue
+init: build
